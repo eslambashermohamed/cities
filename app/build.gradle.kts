@@ -33,13 +33,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        dataBinding = true
-        viewBinding = true
-    }
+  buildFeatures{
+      dataBinding=true
+  }
 }
 dependencies {
-    implementation("com.google.code.gson:gson:2.8.9")
+    implementation( libs.kotlinx.coroutines.core)
+    implementation(libs.gson)
+    implementation (libs.androidx.activity.ktx)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -9,8 +9,8 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-class JsonParser {
-    fun loadCities(context: Context): List<CityModel>? {
+class JsonParser(val context:Context) {
+    suspend fun loadCities(): List<CityModel>? {
         val json: String
 
         return try {

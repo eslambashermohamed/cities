@@ -8,7 +8,7 @@ data class CityModel(
     @SerializedName("name")
     val name: String? = null,
     @SerializedName("_id")
-    val _id: Long? = null,
+    val _id: Int? = null,
     @SerializedName("coord")
     val coord: Coord
 
