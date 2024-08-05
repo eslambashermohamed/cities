@@ -6,16 +6,16 @@ import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.islam.cities.R
-import com.islam.cities.utils.Parser
-import com.islam.cities.data.repository.RepositoryImp
 import com.islam.cities.databinding.ActivityMainBinding
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -24,9 +24,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.viewModel = viewModel
+        viewModel.getListOfCities()
         binding.lifecycleOwner = this
-        GlobalScope.launch {
+        binding.viewModel = viewModel
+       lifecycleScope.launch {
             viewModel.list.collect { data ->
                 recyclerView = MyRecyclerView(data)
                 withContext(Dispatchers.Main) {

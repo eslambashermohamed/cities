@@ -41,31 +41,6 @@ class MyRecyclerView(var list: List<CityModel>) :
         var binding: CityItemBinding = binding
     }
 
-//    override fun getFilter(): Filter {
-//        return object : Filter() {
-//            override fun performFiltering(constraint: CharSequence?): FilterResults {
-//                val filteredList = mutableListOf<CityModel>()
-//
-//                if (constraint.isNullOrEmpty()) {
-//                    filteredList.addAll(itemListFull)
-//                } else {
-//                    val filterPattern = constraint.toString().lowercase().trim()
-//
-//                    for (item in itemListFull) {
-//                        if (item.name!!.lowercase().startsWith(filterPattern)) {
-//                            filteredList.add(item)
-//                        }
-//                    }
-//                }
-//                return FilterResults().apply { values = filteredList }
-//            }
-//
-//            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-//                list = (results?.values as List<CityModel>).sortedBy { it.name }
-//                notifyDataSetChanged()
-//            }
-//        }
-//    }
 
 
     override fun getFilter(): Filter {

@@ -1,7 +1,6 @@
 package com.islam.cities.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.islam.cities.data.model.CityModel
 import com.islam.cities.data.model.State
@@ -16,10 +15,6 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     val list = MutableStateFlow<List<CityModel>>(emptyList())
 
-    init {
-        getListOfCities()
-    }
-
     fun getListOfCities() {
         viewModelScope.launch(Dispatchers.IO) {
             var state = repository.getListOfCities()
@@ -28,8 +23,8 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 
                 }
                 if (state is State.Success) {
-                     val data = state.data
-                    list.value=data
+                    val data = state.data
+                    list.emit(data)
 
 
                 }
