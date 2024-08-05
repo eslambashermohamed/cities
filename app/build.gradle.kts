@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -38,6 +40,7 @@ android {
   }
 }
 dependencies {
+
     implementation( libs.kotlinx.coroutines.core)
     implementation(libs.gson)
     implementation (libs.androidx.activity.ktx)
@@ -49,4 +52,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    //dependency injection
+    implementation ("com.google.dagger:hilt-android:2.48")
+   kapt( "com.google.dagger:hilt-android-compiler:2.48")
+
 }

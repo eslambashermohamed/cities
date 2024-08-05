@@ -1,4 +1,4 @@
-package com.islam.cities.data
+package com.islam.cities.utils
 
 import android.content.Context
 import android.util.Log

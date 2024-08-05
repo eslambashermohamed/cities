@@ -6,17 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.islam.cities.data.model.CityModel
 import com.islam.cities.data.model.State
 import com.islam.cities.data.repository.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val repository: Repository) : ViewModel() {
-    val search = MutableStateFlow("")
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     val list = MutableStateFlow<List<CityModel>>(emptyList())
 
     init {
         getListOfCities()
-
     }
 
     fun getListOfCities() {
@@ -39,14 +40,5 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         }
 
 
-    }
-}
-
-class VeiwModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass == MainViewModel::class.java) {
-            return MainViewModel(repository) as T
-        }
-        throw Throwable("un Nown")
     }
 }

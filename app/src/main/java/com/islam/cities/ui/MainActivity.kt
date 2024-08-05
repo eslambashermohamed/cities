@@ -7,23 +7,23 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.islam.cities.R
-import com.islam.cities.data.Parser
+import com.islam.cities.utils.Parser
 import com.islam.cities.data.repository.RepositoryImp
 import com.islam.cities.databinding.ActivityMainBinding
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var recyclerView: MyRecyclerView
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val viewModel: MainViewModel by viewModels() {
-            VeiwModelFactory(RepositoryImp(Parser(this)))
-        }
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         GlobalScope.launch {
@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
                 recyclerView = MyRecyclerView(data)
                 withContext(Dispatchers.Main) {
                     binding.recyclerview.adapter = recyclerView
-
                 }
             }
         }

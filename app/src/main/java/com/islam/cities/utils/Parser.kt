@@ -1,4 +1,4 @@
-package com.islam.cities.data
+package com.islam.cities.utils
 
 import android.content.Context
 import com.google.gson.stream.JsonReader
@@ -6,8 +6,11 @@ import com.islam.cities.data.model.CityModel
 import com.islam.cities.data.model.Coord
 import java.io.IOException
 import java.io.InputStreamReader
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Parser (val context:Context){
+@Singleton
+class Parser @Inject constructor(val context:Context){
     fun readLocations(): List<CityModel> {
         val locations = mutableListOf<CityModel>()
 

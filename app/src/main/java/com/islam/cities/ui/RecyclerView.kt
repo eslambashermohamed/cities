@@ -13,6 +13,10 @@ import com.islam.cities.databinding.CityItemBinding
 
 class MyRecyclerView(var list: List<CityModel>) :
     RecyclerView.Adapter<MyRecyclerView.MyViewHolder>(), Filterable {
+    init {
+        list = list.sortedBy { it.name }
+    }
+
     private var itemListFull: List<CityModel> = list.toList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding: CityItemBinding = DataBindingUtil.inflate(
@@ -30,7 +34,9 @@ class MyRecyclerView(var list: List<CityModel>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var model = list.get(position)
-        holder.binding.cityCountry.text = model.name + ", " + model.country
+        holder.binding.title.text = model.name + ", " + model.country
+        holder.binding.subtitle.text =
+            "lon: ${model.coord.lon.toString()}   lat: ${model.coord.lat.toString()}"
     }
 
     class MyViewHolder(binding: CityItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -48,17 +54,16 @@ class MyRecyclerView(var list: List<CityModel>) :
                     val filterPattern = constraint.toString().lowercase().trim()
 
                     for (item in itemListFull) {
-                        if (item.name!!.lowercase().contains(filterPattern)) {
+                        if (item.name!!.lowercase().startsWith(filterPattern)) {
                             filteredList.add(item)
                         }
                     }
                 }
-
                 return FilterResults().apply { values = filteredList }
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                list = results?.values as List<CityModel>
+                list = (results?.values as List<CityModel>).sortedBy { it.name }
                 notifyDataSetChanged()
             }
         }
