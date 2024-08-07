@@ -54,7 +54,7 @@ class CitiesListFragment : Fragment() {
         }
     }
     fun search() {
-        if (!binding.search.text.isBlank()) {
+       // if (!binding.search.text.isBlank()) {
             binding.search.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     charSequence: CharSequence?,
@@ -71,5 +71,5 @@ class CitiesListFragment : Fragment() {
                 override fun afterTextChanged(editable: Editable?) {}
             })
         }
-    }
+   // }
 }
