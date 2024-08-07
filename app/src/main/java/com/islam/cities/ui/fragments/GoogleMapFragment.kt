@@ -1,62 +1,81 @@
 package com.islam.cities.ui.fragments
 
-import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.graphics.Rect
+import android.location.GpsStatus
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Marker
 import com.islam.cities.R
 import com.islam.cities.databinding.FragmentGoogleMapBinding
 import dagger.hilt.android.AndroidEntryPoint
+import org.osmdroid.api.IMapController
+import org.osmdroid.config.Configuration
+import org.osmdroid.events.MapListener
+import org.osmdroid.events.ScrollEvent
+import org.osmdroid.events.ZoomEvent
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
 
 @AndroidEntryPoint
-class GoogleMapFragment : Fragment(), OnMapReadyCallback {
+class GoogleMapFragment : Fragment(), MapListener, GpsStatus.Listener {
 
     lateinit var binding: FragmentGoogleMapBinding
-    private lateinit var mMap: GoogleMap
+
+    lateinit var mMap: MapView
+    lateinit var controller: IMapController;
     private val args: GoogleMapFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_google_map, container, false)
-        Log.i("MYCODE", isGooglePlayServicesAvailable(requireContext()).toString())
+        mapConviguration()
+        initMapView()
         return binding.root
     }
 
-    private fun moveToLocation(lat: Double, lon: Double, name: String) {
-        val location = LatLng(lat, lon)
-        mMap.addMarker(MarkerOptions().position(location).title(name))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location))
+    override fun onScroll(event: ScrollEvent?): Boolean {
+        return true
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
-        mapFragment?.getMapAsync(this)
+    override fun onZoom(event: ZoomEvent?): Boolean {
+        return false;
     }
 
-    override fun onMapReady(p0: GoogleMap) {
-        mMap = p0
-        moveToLocation(args.lat.toDouble(), args.lon.toDouble(), args.name)
-        Log.i("MYCODE", "hello")
+    override fun onGpsStatusChanged(event: Int) {}
+    fun mapConviguration() {
+        Configuration.getInstance().load(
+            requireContext(),
+            activity?.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+        )
     }
 
-    fun isGooglePlayServicesAvailable(context: Context): Boolean {
-        val googleApiAvailability = GoogleApiAvailability.getInstance()
-        return googleApiAvailability.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
+    fun initMapView() {
+        mMap = binding.osmmap
+        mMap.setTileSource(TileSourceFactory.MAPNIK)
+        mMap.mapCenter
+        mMap.setMultiTouchControls(true)
+        mMap.getLocalVisibleRect(Rect())
+        controller = mMap.controller
+        controller.setZoom(6.0)
+        val gPt = GeoPoint(args.lat.toDouble(), args.lon.toDouble());
+        controller.setCenter(gPt);
+        val marker = org.osmdroid.views.overlay.Marker(mMap)
+        marker.position = gPt
+        marker.title = args.name
+        mMap.overlays.add(marker)
     }
 
 }
+
+
+
+
+
