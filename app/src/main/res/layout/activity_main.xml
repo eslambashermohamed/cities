@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.islam.cities.ui.MainViewModel" />
@@ -13,35 +14,21 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity"
-        android:background="@color/white">
+        android:background="@color/white"
+        tools:context=".ui.MainActivity">
 
-        <EditText
-            android:id="@+id/search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/mainActivity_editText_layoutmargin"
-            android:background="@drawable/shape_search"
-            android:drawableStart="@drawable/baseline_search_24"
-            android:drawablePadding="10dp"
-            android:hint="search"
-            android:padding="@dimen/mainActivity_editText_padding"
-            android:textSize="@dimen/mainActivity_edittext_textsize"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_margin="10dp"
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_host"
+            android:name="androidx.navigation.fragment.NavHostFragment"              android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/nav_file"  />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
+

@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.gson)
     implementation (libs.androidx.activity.ktx)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
@@ -53,7 +54,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     //dependency injection
-    implementation ("com.google.dagger:hilt-android:2.48")
-   kapt( "com.google.dagger:hilt-android-compiler:2.48")
+    implementation (libs.hilt.android)
+   kapt( libs.hilt.android.compiler)
+    //google map
+    implementation (libs.play.services.maps)
+    implementation (libs.play.services.maps.location)
+    // navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
 }

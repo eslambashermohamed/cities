@@ -8,9 +8,3 @@ data class Coord(
     @SerializedName("lat")
     val lat: Double? = null
 )
-/*
-"coord":{
-    "lon":34.283333,
-    "lat":44.549999
-}
-*/

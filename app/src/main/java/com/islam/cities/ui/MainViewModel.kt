@@ -8,13 +8,14 @@ import com.islam.cities.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    val list = MutableStateFlow<List<CityModel>>(emptyList())
-
+   private val _list = MutableStateFlow<List<CityModel>>(emptyList())
+   val list:StateFlow<List<CityModel>> =_list
     fun getListOfCities() {
         viewModelScope.launch(Dispatchers.IO) {
             var state = repository.getListOfCities()
@@ -24,9 +25,7 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
                 }
                 if (state is State.Success) {
                     val data = state.data
-                    list.emit(data)
-
-
+                    _list.emit(data)
                 }
                 if (state is State.Error) {
                     throw Exception(state.message)

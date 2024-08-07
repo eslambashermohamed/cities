@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.cities.R
 import com.islam.cities.data.model.CityModel
@@ -13,9 +15,10 @@ import com.islam.cities.databinding.CityItemBinding
 
 class MyRecyclerView(var list: List<CityModel>) :
     RecyclerView.Adapter<MyRecyclerView.MyViewHolder>(), Filterable {
-        init {
-            list=list.sortedBy { it.name }
-        }
+    init {
+        list = list.sortedBy { it.name }
+    }
+
     private var itemListFull: List<CityModel> = list.toList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding: CityItemBinding = DataBindingUtil.inflate(
@@ -34,13 +37,16 @@ class MyRecyclerView(var list: List<CityModel>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var model = list.get(position)
         holder.binding.title.text = model.name + ", " + model.country
-        holder.binding.subtitle.text="lon: ${model.coord.lon.toString()}   lat: ${model.coord.lat.toString()}"
+        holder.binding.subtitle.text =
+            "lon: ${model.coord.lon.toString()}   lat: ${model.coord.lat.toString()}"
+        holder.binding.root.setOnClickListener {
+         Navigation.findNavController(it).navigate(R.id.action_citiesListFragment_to_googleMapFragment)
+        }
     }
 
     class MyViewHolder(binding: CityItemBinding) : RecyclerView.ViewHolder(binding.root) {
         var binding: CityItemBinding = binding
     }
-
 
 
     override fun getFilter(): Filter {
