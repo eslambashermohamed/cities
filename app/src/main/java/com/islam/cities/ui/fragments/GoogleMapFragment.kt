@@ -27,7 +27,6 @@ import org.osmdroid.views.MapView
 class GoogleMapFragment : Fragment(), MapListener, GpsStatus.Listener {
 
     lateinit var binding: FragmentGoogleMapBinding
-
     lateinit var mMap: MapView
     lateinit var controller: IMapController;
     private val args: GoogleMapFragmentArgs by navArgs()
@@ -59,7 +58,6 @@ class GoogleMapFragment : Fragment(), MapListener, GpsStatus.Listener {
 
     fun initMapView() {
         mMap = binding.osmmap
-        mMap.setTileSource(TileSourceFactory.MAPNIK)
         mMap.mapCenter
         mMap.setMultiTouchControls(true)
         mMap.getLocalVisibleRect(Rect())

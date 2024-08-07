@@ -36,9 +36,7 @@ class MyRecyclerView(var list: List<CityModel>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var model = list.get(position)
-        holder.binding.title.text = model.name + ", " + model.country
-        holder.binding.subtitle.text =
-            "lon: ${model.coord.lon.toString()}   lat: ${model.coord.lat.toString()}"
+        holder.binding.item=model
         holder.binding.root.setOnClickListener {
           var action=  CitiesListFragmentDirections.actionCitiesListFragmentToGoogleMapFragment(
                 list[position].coord.lat !!,
@@ -96,4 +94,5 @@ class MyRecyclerView(var list: List<CityModel>) :
             }
         }
     }
+
 }
