@@ -12,11 +12,22 @@
         android:label="CitiesListFragment" >
         <action
             android:id="@+id/action_citiesListFragment_to_googleMapFragment"
-            app:destination="@id/googleMapFragment" />
+            app:destination="@id/googleMapFragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/googleMapFragment"
         android:name="com.islam.cities.ui.fragments.GoogleMapFragment"
         android:label="fragment_google_map"
-        tools:layout="@layout/fragment_google_map" />
+        tools:layout="@layout/fragment_google_map" >
+        <argument
+            android:name="lat"
+            app:argType="float" />
+        <argument
+            android:name="lon"
+            app:argType="float" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>

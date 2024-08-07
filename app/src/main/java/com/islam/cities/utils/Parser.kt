@@ -56,6 +56,6 @@ class Parser @Inject constructor(val context:Context){
         }
         reader.endObject() // End reading the JSON object
 
-        return CityModel(country, name, id, Coord(lon=lon,lat=lat))
+        return CityModel(country, name, id, Coord(lon=lon.toFloat(),lat=lat.toFloat()))
     }
 }

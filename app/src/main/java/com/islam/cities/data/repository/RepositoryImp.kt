@@ -17,7 +17,6 @@ class RepositoryImp @Inject constructor(private val jsonParser: Parser): Reposit
             emit(State.Loading())
             try {
                 val data=jsonParser.readLocations()
-                Log.i("MYCODE",data.toString())
                 emit(State.Success(data!!))
             }catch (e:Exception){
                emit(State.Error("not found data"))

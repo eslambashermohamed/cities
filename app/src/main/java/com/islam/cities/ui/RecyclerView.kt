@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.islam.cities.R
 import com.islam.cities.data.model.CityModel
 import com.islam.cities.databinding.CityItemBinding
+import com.islam.cities.ui.fragments.CitiesListFragmentDirections
 
 
 class MyRecyclerView(var list: List<CityModel>) :
@@ -40,7 +40,13 @@ class MyRecyclerView(var list: List<CityModel>) :
         holder.binding.subtitle.text =
             "lon: ${model.coord.lon.toString()}   lat: ${model.coord.lat.toString()}"
         holder.binding.root.setOnClickListener {
-         Navigation.findNavController(it).navigate(R.id.action_citiesListFragment_to_googleMapFragment)
+          var action=  CitiesListFragmentDirections.actionCitiesListFragmentToGoogleMapFragment(
+                list[position].coord.lat !!,
+                list[position].coord.lat!!,
+                list[position].name!!
+            )
+            Navigation.findNavController(it)
+                .navigate(action)
         }
     }
 
