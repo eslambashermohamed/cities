@@ -53,16 +53,23 @@ class CitiesListFragment : Fragment() {
             }
         }
     }
-    fun search(){
-        binding.search.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence?, i: Int, i1: Int, i2: Int) {}
+    fun search() {
+        if (!binding.search.text.isBlank()) {
+            binding.search.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    charSequence: CharSequence?,
+                    i: Int,
+                    i1: Int,
+                    i2: Int
+                ) {
+                }
 
-            override fun onTextChanged(charSequence: CharSequence?, i: Int, i1: Int, i2: Int) {
-                recyclerView.filter.filter(charSequence)
-            }
+                override fun onTextChanged(charSequence: CharSequence?, i: Int, i1: Int, i2: Int) {
+                    recyclerView.filter.filter(charSequence)
+                }
 
-            override fun afterTextChanged(editable: Editable?) {}
-        })
+                override fun afterTextChanged(editable: Editable?) {}
+            })
+        }
     }
-
 }
