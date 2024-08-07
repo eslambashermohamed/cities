@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.islam.cities.R
+import com.islam.cities.data.model.State
 import com.islam.cities.databinding.FragmentCitiesListBinding
 import com.islam.cities.ui.MainViewModel
 import com.islam.cities.ui.MyRecyclerView
@@ -50,10 +51,12 @@ class CitiesListFragment : Fragment() {
 
     fun showCitiesInRecycler() {
         lifecycleScope.launch {
-            viewModel.list.collect { data ->
-                recyclerView = MyRecyclerView(data)
-                withContext(Dispatchers.Main) {
-                    binding.recyclerview.adapter = recyclerView
+            viewModel.state.collect { state ->
+                if (state is State.Success) {
+                    recyclerView = MyRecyclerView(state.data)
+                    withContext(Dispatchers.Main) {
+                        binding.recyclerview.adapter = recyclerView
+                    }
                 }
             }
         }

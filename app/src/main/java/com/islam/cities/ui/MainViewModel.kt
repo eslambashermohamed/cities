@@ -14,25 +14,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-   private val _list = MutableStateFlow<List<CityModel>>(emptyList())
-   val list:StateFlow<List<CityModel>> =_list
+    private val _state = MutableStateFlow<State<List<CityModel>>>(State.Loading())
+    val state: StateFlow<State<List<CityModel>>> = _state
     fun getListOfCities() {
         viewModelScope.launch(Dispatchers.IO) {
             var state = repository.getListOfCities()
-            state?.collect { state ->
-                if (state is State.Loading) {
-
+            state?.collect { s ->
+                if (s is State.Loading) {
+                    _state.emit(State.Loading())
                 }
-                if (state is State.Success) {
-                    val data = state.data
-                    _list.emit(data)
+                if (s is State.Success) {
+                    val data = s.data
+                    _state.emit(State.Success(data))
                 }
-                if (state is State.Error) {
-                    throw Exception(state.message)
+                if(s is State.Error) {
+                    _state.emit(State.Error("Error"))
                 }
             }
         }
-
-
     }
 }
