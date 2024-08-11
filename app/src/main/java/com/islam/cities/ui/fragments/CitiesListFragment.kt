@@ -25,7 +25,6 @@ class CitiesListFragment : Fragment() {
     lateinit var binding: FragmentCitiesListBinding
     lateinit var recyclerView: MyRecyclerView
 
-
     private val viewModel: MainViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,12 +33,12 @@ class CitiesListFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cities_list, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.getListOfCities()
         showCitiesInRecycler()
         search()
 
         return binding.root
     }
+
 
     fun showCitiesInRecycler() {
         lifecycleScope.launch {
@@ -54,7 +53,7 @@ class CitiesListFragment : Fragment() {
         }
     }
     fun search() {
-       // if (!binding.search.text.isBlank()) {
+
             binding.search.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     charSequence: CharSequence?,
@@ -71,5 +70,5 @@ class CitiesListFragment : Fragment() {
                 override fun afterTextChanged(editable: Editable?) {}
             })
         }
-   // }
+
 }
