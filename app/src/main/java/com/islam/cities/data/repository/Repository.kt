@@ -5,5 +5,5 @@ import com.islam.cities.data.model.State
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getListOfCities(): Flow<State<List<CityModel>>>?
+     suspend fun getListOfCities(): Flow<State<String>>?
 }

@@ -3,6 +3,7 @@ package com.islam.cities.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,6 @@ class CitiesListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         showCitiesInRecycler()
         search()
-
         return binding.root
     }
 
